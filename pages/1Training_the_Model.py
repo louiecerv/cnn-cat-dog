@@ -205,7 +205,7 @@ def app():
         )
 
         # Evaluate the model on the test data
-        accuracy = model.evaluate(ds_test)
+        accuracy = classifier.evaluate(ds_test)
         st.write("Test accuracy:", accuracy)
 
         # Extract loss and accuracy values from history
