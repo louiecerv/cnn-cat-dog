@@ -126,17 +126,9 @@ def app():
 
     # Initialize the CNN
     classifier = keras.Sequential()
-
-    # Convolutional layer
     classifier.add(layers.Conv2D(n_layers, (3, 3), activation=h_activation, input_shape=(64, 64, 3)))  # Add input shape for RGB images
-
-    # Max pooling layer
     classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
-
-    # Flatten layer
     classifier.add(layers.Flatten())
-
-    # Dense layers
     classifier.add(layers.Dense(units=128, activation="relu"))
     classifier.add(layers.Dense(units=1, activation=o_activation))
 
@@ -205,7 +197,7 @@ def app():
         )
 
         # Evaluate the model on the test data
-        accuracy = classifier.evaluate(ds_test)
+        accuracy = classifier.evaluate(test_set)
         st.write("Test accuracy:", accuracy)
 
         # Extract loss and accuracy values from history
