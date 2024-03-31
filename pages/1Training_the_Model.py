@@ -195,7 +195,7 @@ def app():
         test_set = st.session_state.test_set
 
         # Train the model
-        classifier.fit(
+        history = classifier.fit(
             training_set,
             epochs=epochs,
             validation_data=test_set,
@@ -203,6 +203,39 @@ def app():
             validation_steps=10,
             callbacks=[CustomCallback()]
         )
+
+        # Evaluate the model on the test data
+        accuracy = model.evaluate(ds_test)
+        st.write("Test accuracy:", accuracy)
+
+        # Extract loss and accuracy values from history
+        train_loss = history.history['loss']
+        val_loss = history.history['val_loss']
+        train_acc = history.history['accuracy']
+        val_acc = history.history['val_accuracy']
+
+        # Create the figure with two side-by-side subplots
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))  # Adjust figsize for better visualization
+
+        # Plot loss on the first subplot (ax1)
+        ax1.plot(train_loss, label='Training Loss')
+        ax1.plot(val_loss, label='Validation Loss')
+        ax1.set_xlabel('Epoch')
+        ax1.set_ylabel('Loss')
+        ax1.legend()
+
+        # Plot accuracy on the second subplot (ax2)
+        ax2.plot(train_acc, 'g--', label='Training Accuracy')
+        ax2.plot(val_acc, 'r--', label='Validation Accuracy')
+        ax2.set_xlabel('Epoch')
+        ax2.set_ylabel('Accuracy')
+        ax2.legend()
+
+        # Set the main title (optional)
+        fig.suptitle('Training and Validation Performance')
+
+        plt.tight_layout()  # Adjust spacing between subplots
+        st.pyplot(fig)   
         
         # update the progress bar
         for i in range(100):
