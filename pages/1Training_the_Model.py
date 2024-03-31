@@ -224,7 +224,7 @@ def plot_images(images, labels):
     for i, (image, label) in enumerate(zip(images, labels)):
         axs[i].imshow(image)  # Use ax for imshow on each subplot
         #axs[i].set_title(f"Class: {label}")  # Use ax.set_title for title
-        axs[i].set_title(get_class(label)) 
+        axs[i].set_title(get_class(int(label))) 
         axs[i].axis("off")  # Use ax.axis for turning off axis
 
     plt.tight_layout()  # Adjust spacing between subplots
