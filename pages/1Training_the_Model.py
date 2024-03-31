@@ -11,6 +11,10 @@ from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 import time
+classes = ['cat', 'dog']
+
+def get_class(label)
+    return classes[label]
 
 # Define the Streamlit app
 def app():
@@ -219,7 +223,8 @@ def plot_images(images, labels):
 
     for i, (image, label) in enumerate(zip(images, labels)):
         axs[i].imshow(image)  # Use ax for imshow on each subplot
-        axs[i].set_title(f"Class: {label}")  # Use ax.set_title for title
+        #axs[i].set_title(f"Class: {label}")  # Use ax.set_title for title
+        axs[i].set_title(get_class(label)) 
         axs[i].axis("off")  # Use ax.axis for turning off axis
 
     plt.tight_layout()  # Adjust spacing between subplots
