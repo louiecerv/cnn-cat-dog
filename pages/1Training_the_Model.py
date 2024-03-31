@@ -58,8 +58,29 @@ def app():
     progress_bar = st.progress(0, text="Loading the images, please wait...")
 
     # Data generators
-    train_datagen = ImageDataGenerator(rescale=1.0 / 255, shear_range=0.2, horizontal_flip=True)
-    test_datagen = ImageDataGenerator(rescale=1.0 / 255, shear_range=0.2, horizontal_flip=True)
+    #train_datagen = ImageDataGenerator(rescale=1.0 / 255, shear_range=0.2, horizontal_flip=True)
+    #test_datagen = ImageDataGenerator(rescale=1.0 / 255, shear_range=0.2, horizontal_flip=True)
+
+    # Data augmentation (example using ImageDataGenerator)
+    train_datagen = ImageDataGenerator(
+        rescale=1.0 / 255,
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True
+    )
+
+    test_datagen = ImageDataGenerator(
+        rescale=1.0 / 255,
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True
+    )
 
     # Data preparation
     training_set = train_datagen.flow_from_directory(
@@ -126,14 +147,14 @@ def app():
     classifier = keras.Sequential()
 
     # First convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)))
+    classifier.add(layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3)))
     classifier.add(layers.BatchNormalization())
 
     # Max pooling layer
     classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
     # Second convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(64, (3, 3), activation='relu'))
+    classifier.add(layers.Conv2D(64, (3, 3), activation=h_activation))
     classifier.add(layers.BatchNormalization())
 
     # Max pooling layer
@@ -143,15 +164,14 @@ def app():
     classifier.add(layers.Flatten())
 
     # Dense layer with Dropout
-    classifier.add(layers.Dense(units=128, activation='relu'))
+    classifier.add(layers.Dense(units=128, activation=h_activation))
     classifier.add(layers.Dropout(0.2))  # Introduce dropout to prevent overfitting
 
     # Output layer with appropriate activation
     classifier.add(layers.Dense(units=1, activation=o_activation))
 
-
     # Compile the model
-    classifier.compile(optimizer=optimizer, loss="binary_crossentropy", metrics=["accuracy"])
+    classifier.compile(keras.optimizers.Adam(learning_rate=0.001), loss="binary_crossentropy", metrics=["accuracy"])
 
     st.session_state.classifier = classifier
 
