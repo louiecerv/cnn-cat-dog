@@ -13,7 +13,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import time
 classes = ['cat', 'dog']
 
-def get_class(label)
+def get_class(label):
     return classes[label]
 
 # Define the Streamlit app
