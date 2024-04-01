@@ -126,15 +126,12 @@ def app():
     options = ["sigmoid", "softmax"]
     o_activation = st.sidebar.selectbox('Activation function for the output layer:', options)
 
-    options = ["adam", "adagrad", "sgd"]
-    optimizer = st.sidebar.selectbox('Select the optimizer:', options)
-
     n_layers = st.sidebar.slider(      
-        label="Number of Neurons in the Convolutional Layer:",
-        min_value=16,
-        max_value=128,
-        value=32,  # Initial value
-        step=16
+        label="Number of Neurons in the Hidden Layer:",
+        min_value=32,
+        max_value=256,
+        value=128,  # Initial value
+        step=32
     )
 
     epochs = st.sidebar.slider(   
@@ -165,7 +162,7 @@ def app():
     classifier.add(layers.Flatten())
 
     # Dense layer with Dropout
-    classifier.add(layers.Dense(units=128, activation=o_activation))
+    classifier.add(layers.Dense(units=n_layers, activation=o_activation))
     classifier.add(layers.Dropout(0.2))  # Introduce dropout to prevent overfitting
 
     # Output layer with appropriate activation
