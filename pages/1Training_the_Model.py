@@ -145,28 +145,34 @@ def app():
     classifier = keras.Sequential()
 
     # First convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3), kernel_regularizer=regularizers.l2(0.01)))
+    classifier.add(layers.Conv2D(64, (3, 3), activation='relu', input_shape=(64, 64, 3), kernel_regularizer=regularizers.l2(0.001)))
     classifier.add(layers.BatchNormalization())
 
     # Max pooling layer
     classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
     # Second convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(64, (3, 3), activation=h_activation, kernel_regularizer=regularizers.l2(0.01)))
+    classifier.add(layers.Conv2D(128, (3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.001)))
     classifier.add(layers.BatchNormalization())
 
     # Max pooling layer
     classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
+    # Third convolutional layer (optional)
+    # classifier.add(layers.Conv2D(256, (3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.001)))
+    # classifier.add(layers.BatchNormalization())
+
     # Flatten layer
     classifier.add(layers.Flatten())
 
-    # Dense layer with Dropout
-    classifier.add(layers.Dense(units=n_layers, activation=h_activation))
-    classifier.add(layers.Dropout(0.4))  # Introduce dropout to prevent overfitting
+    # Dense layers with Dropout
+    classifier.add(layers.Dense(units=256, activation='relu'))
+    classifier.add(layers.Dropout(0.3))
+    classifier.add(layers.Dense(units=n_layers, activation='relu'))
+    classifier.add(layers.Dropout(0.2))  # Reduce dropout as we go deeper
 
     # Output layer with appropriate activation
-    classifier.add(layers.Dense(units=1, activation=o_activation))
+    classifier.add(layers.Dense(units=1, activation=o_activation)
 
     # Compile the model
     classifier.compile(keras.optimizers.Adam(learning_rate=0.001), loss="binary_crossentropy", metrics=["accuracy"])
