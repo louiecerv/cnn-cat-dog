@@ -147,7 +147,7 @@ def app():
     classifier = keras.Sequential()
 
     # First convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3)))
+    classifier.add(layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3), kernel_regularizer=regularizers.l2(0.01)))
     classifier.add(layers.BatchNormalization())
 
     # Max pooling layer
