@@ -162,7 +162,7 @@ def app():
     classifier.add(layers.Flatten())
 
     # Dense layer with Dropout
-    classifier.add(layers.Dense(units=n_layers, activation=o_activation))
+    classifier.add(layers.Dense(units=n_layers, activation=h_activation))
     classifier.add(layers.Dropout(0.2))  # Introduce dropout to prevent overfitting
 
     # Output layer with appropriate activation
