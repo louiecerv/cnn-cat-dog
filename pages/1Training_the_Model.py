@@ -152,7 +152,7 @@ def app():
     classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
     # Second convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(128, (3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.001)))
+    classifier.add(layers.Conv2D(n_layers, (3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.001)))
     classifier.add(layers.BatchNormalization())
 
     # Max pooling layer
