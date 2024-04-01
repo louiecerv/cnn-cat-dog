@@ -172,7 +172,7 @@ def app():
     classifier.add(layers.Dropout(0.2))  # Reduce dropout as we go deeper
 
     # Output layer with appropriate activation
-    classifier.add(layers.Dense(units=1, activation=o_activation)
+    classifier.add(layers.Dense(units=1, activation=o_activation))
 
     # Compile the model
     classifier.compile(keras.optimizers.Adam(learning_rate=0.001), loss="binary_crossentropy", metrics=["accuracy"])
