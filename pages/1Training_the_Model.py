@@ -142,34 +142,21 @@ def app():
         step=5
     )
 
-    classifier = keras.Sequential()
-
-    # First convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3), kernel_regularizer=regularizers.l2(0.01)))
-    classifier.add(layers.BatchNormalization())
-
-    # Max pooling layer
-    classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
-
-    # Second convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(64, (3, 3), activation=h_activation, kernel_regularizer=regularizers.l2(0.01)))
-    classifier.add(layers.BatchNormalization())
-
-    # Max pooling layer
-    classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
-
-    # Flatten layer
-    classifier.add(layers.Flatten())
-
-    # Dense layer with Dropout
-    classifier.add(layers.Dense(units=n_layers, activation=h_activation))
-    classifier.add(layers.Dropout(0.4))  # Introduce dropout to prevent overfitting
-
-    # Output layer with appropriate activation
-    classifier.add(layers.Dense(units=1, activation=o_activation))
+    classifier = keras.Sequential(
+        [
+            layers.Conv2D(32, (3, 3), activation="relu", input_shape=(64, 64, 3)),
+            layers.MaxPooling2D(pool_size=(2, 2)),
+            layers.Conv2D(64, (3, 3), activation="relu"),
+            layers.MaxPooling2D(pool_size=(2, 2)),
+            layers.Conv2D(128, (3, 3), activation="relu"),
+            layers.Flatten(),
+            layers.Dense(128, activation="relu"),
+            layers.Dense(1, activation="sigmoid"),
+        ]
+    )
 
     # Compile the model (adjust optimizer and loss as needed)
-    classifier.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     st.session_state.classifier = classifier
 
