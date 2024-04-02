@@ -36,9 +36,9 @@ def app():
     text = """Convolutional Neural Network Image Classifier"""
     st.subheader(text)
 
-    text = """Louie F. Cervantes, M. Eng. (Information Engineering) \n
+    text = """Prof. Louie F. Cervantes, M. Eng. (Information Engineering) \n
     CCS 229 - Intelligent Systems
-    Computer Science Department
+    Department of Computer Science
     College of Information and Communications Technology
     West Visayas State University"""
     st.text(text)
