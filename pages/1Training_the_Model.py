@@ -142,36 +142,31 @@ def app():
         step=5
     )
 
-    classifier = keras.Sequential()
 
-    # First convolutional layer with Batch Normalization
-    classifier.add(layers.Conv2D(64, (3, 3), activation=h_activation, input_shape=(64, 64, 3), kernel_regularizer=regularizers.l2(0.001)))
+    classifier = keras.Sequential()
+    # First convolutional layer with Batch Normalization (Reduced filters)
+    classifier.add(layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3), kernel_regularizer=regularizers.l2(0.001)))
     classifier.add(layers.BatchNormalization())
 
-    # Max pooling layer
+    # Max pooling layer (Earlier downsampling)
     classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
-    # Second convolutional layer with Batch Normalization
+    # Second convolutional layer with Batch Normalization (Reduced filters)
     classifier.add(layers.Conv2D(n_layers, (3, 3), activation=h_activation, kernel_regularizer=regularizers.l2(0.001)))
     classifier.add(layers.BatchNormalization())
-
-    # Max pooling layer
-    classifier.add(layers.MaxPooling2D(pool_size=(2, 2)))
 
     # Flatten layer
     classifier.add(layers.Flatten())
 
-    # Dense layers with Dropout
-    classifier.add(layers.Dense(units=256, activation='relu'))
+    # Combined dense layer with Dropout (Reduced complexity)
+    classifier.add(layers.Dense(128, activation='relu'))
     classifier.add(layers.Dropout(0.3))
-    classifier.add(layers.Dense(units=n_layers, activation='relu'))
-    classifier.add(layers.Dropout(0.2))  # Reduce dropout as we go deeper
 
-    # Output layer with appropriate activation
-    classifier.add(layers.Dense(units=1, activation=o_activation))
+    # Output layer
+    classifier.add(layers.Dense(n_layers, activation='softmax'))  # Assuming multi-class classification
 
-    # Compile the model
-    classifier.compile(keras.optimizers.Adam(learning_rate=0.001), loss="binary_crossentropy", metrics=["accuracy"])
+    # Compile the model (adjust optimizer and loss as needed)
+    classifier.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     st.session_state.classifier = classifier
 
