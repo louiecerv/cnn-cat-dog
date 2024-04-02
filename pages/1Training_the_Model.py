@@ -146,12 +146,12 @@ def app():
         [
             layers.Conv2D(32, (3, 3), activation="relu", input_shape=(64, 64, 3)),
             layers.MaxPooling2D(pool_size=(2, 2)),
-            layers.Conv2D(64, (3, 3), activation="relu"),
+            layers.Conv2D(64, (3, 3), activation=h_activation),
             layers.MaxPooling2D(pool_size=(2, 2)),
-            layers.Conv2D(128, (3, 3), activation="relu"),
+            layers.Conv2D(n_layers, (3, 3), activation=h_activation),
             layers.Flatten(),
-            layers.Dense(128, activation="relu"),
-            layers.Dense(1, activation="sigmoid"),
+            layers.Dense(128, activation=h_activation),
+            layers.Dense(1, activation=o_activation),
         ]
     )
 
