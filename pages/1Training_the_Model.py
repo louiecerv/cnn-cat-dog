@@ -126,11 +126,11 @@ def app():
     options = ["sigmoid", "softmax"]
     o_activation = st.sidebar.selectbox('Activation function for the output layer:', options)
 
-    n_layers = st.sidebar.slider(      
+    n_neurons = st.sidebar.slider(      
         label="Number of Neurons in the Hidden Layer:",
         min_value=32,
-        max_value=256,
-        value=128,  # Initial value
+        max_value=1024,
+        value=512,  # Initial value
         step=32
     )
 
@@ -144,11 +144,11 @@ def app():
 
     classifier = keras.Sequential(
         [
-            layers.Conv2D(32, (3, 3), activation="relu", input_shape=(64, 64, 3)),
+            layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3)),
             layers.MaxPooling2D(pool_size=(2, 2)),
             layers.Conv2D(64, (3, 3), activation=h_activation),
             layers.MaxPooling2D(pool_size=(2, 2)),
-            layers.Conv2D(n_layers, (3, 3), activation=h_activation),
+            layers.Conv2D(n_neurons, (3, 3), activation=h_activation),
             layers.Flatten(),
             layers.Dense(128, activation=h_activation),
             layers.Dense(1, activation=o_activation),
