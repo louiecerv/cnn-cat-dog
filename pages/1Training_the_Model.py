@@ -205,7 +205,7 @@ def app():
  
         progress_bar = st.progress(0, text="Training the model please wait...")
         # Train the model
-        batch_size = 64
+        batch_size = 32
         training_set = st.session_state.training_set
         test_set = st.session_state.test_set
 
