@@ -205,7 +205,7 @@ def app():
  
         progress_bar = st.progress(0, text="Training the model please wait...")
         # Train the model
-        batch_size = 128
+        batch_size = 25
         training_set = st.session_state.training_set
         test_set = st.session_state.test_set
 
@@ -217,7 +217,8 @@ def app():
             training_set,
             epochs=epochs,
             validation_data=test_set,
-            steps_per_epoch=steps_per_epoch,
+            #steps_per_epoch=steps_per_epoch,
+            batch_size = batch_size,
             validation_steps=10,
             callbacks=[CustomCallback()]
         )
