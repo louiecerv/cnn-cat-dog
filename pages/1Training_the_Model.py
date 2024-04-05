@@ -144,7 +144,7 @@ def app():
 
     classifier = keras.Sequential(
         [
-            layers.Conv2D(32, (3, 3), activation=h_activation, input_shape=(64, 64, 3)),
+            layers.Conv2D(64, (3, 3), activation=h_activation, input_shape=(64, 64, 3)),
             layers.MaxPooling2D(pool_size=(2, 2)),
             layers.Conv2D(64, (3, 3), activation=h_activation),
             layers.MaxPooling2D(pool_size=(2, 2)),
@@ -205,7 +205,7 @@ def app():
  
         progress_bar = st.progress(0, text="Training the model please wait...")
         # Train the model
-        batch_size = 8
+        batch_size = 128
         training_set = st.session_state.training_set
         test_set = st.session_state.test_set
 
