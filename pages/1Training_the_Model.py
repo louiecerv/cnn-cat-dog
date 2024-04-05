@@ -209,15 +209,17 @@ def app():
         training_set = st.session_state.training_set
         test_set = st.session_state.test_set
 
-        num_train_samples = len(training_set)  # Assuming training_set is a sequence
-        steps_per_epoch = int(num_train_samples / batch_size)
+        # alternative configuration only
+        # specify instead of batch_size
+        # num_train_samples = len(training_set)  # Assuming training_set is a sequence
+        # steps_per_epoch = int(num_train_samples / batch_size)
 
         # Train the model
         history = classifier.fit(
             training_set,
             epochs=epochs,
             validation_data=test_set,
-            #steps_per_epoch=steps_per_epoch,
+            #steps_per_epoch=steps_per_epoch,    <-- use only if you disable batch_size
             batch_size = batch_size,
             validation_steps=10,
             callbacks=[CustomCallback()]
