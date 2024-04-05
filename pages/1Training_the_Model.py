@@ -137,8 +137,8 @@ def app():
     epochs = st.sidebar.slider(   
         label="Set the number epochs:",
         min_value=20,
-        max_value=1000,
-        value=200,
+        max_value=200,
+        value=20,
         step=5
     )
 
@@ -205,7 +205,7 @@ def app():
  
         progress_bar = st.progress(0, text="Training the model please wait...")
         # Train the model
-        batch_size = 25
+        batch_size = 64
         training_set = st.session_state.training_set
         test_set = st.session_state.test_set
 
